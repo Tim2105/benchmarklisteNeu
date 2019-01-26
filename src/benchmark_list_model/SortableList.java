@@ -158,5 +158,34 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
       this.toFirst();
   }
   
+  /**
+   * führt bogosort auf Liste aus
+   */
+  public void bogosort()
+  {
+      while(!this.sortiert())
+          this.mischen();
+  }
+  
+  /**
+   * überprüft, ob die liste sortiert ist
+   * @return liste sortiert?
+   */
+  private boolean sortiert()
+  {
+      current = first;
+      while(current.getNextNode() != null)
+      {
+          if(!current.getContentObject().isLess(current.getNextNode().getContentObject()))
+          {
+              current = first;
+              return false;
+          }
+          current = current.getNextNode();
+      }
+      current = first;
+      return true;
+  }
+  
 }
 
