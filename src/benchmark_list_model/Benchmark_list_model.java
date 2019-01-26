@@ -95,6 +95,17 @@ public class Benchmark_list_model extends Observable
     }
     
     /**
+     * sortiert die Liste mithilfe des Bogosorts
+     */
+    public void bogosort()
+    {
+        liste.bogosort();
+        
+        setChanged();
+        notifyObservers();
+    }
+    
+    /**
      * erstellt einen, die Liste repräsentativen, String und gibt diesen zurück
      * @return den String
      */
