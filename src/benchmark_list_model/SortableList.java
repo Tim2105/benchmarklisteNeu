@@ -5,6 +5,8 @@ import benchmark_list_model.ComparableContent;
 
 public class SortableList <ContentType extends ComparableContent> extends List<ContentType> {
 
+    private boolean teilweiseSortiert;
+    
   public SortableList() {
     super();
   }
@@ -31,6 +33,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
           links = links.getNextNode();
       }
       this.toFirst();
+      teilweiseSortiert = true;
   }
   
   /**
@@ -57,16 +60,23 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
       }
       this.concat(liste);
       this.toFirst();
+      teilweiseSortiert = true;
   }
  
   /**
-   * führt Quicksort auf Liste aus
+   * führt Quicksort auf Liste aus und wählt das erste Element als pivot
+   * Wenn ein Teil der Liste sortiert, ist das erste Element wahrscheinlich das kleinste und somit wird das letzte genommen, welches vermutlich neu hinzugefügt wurde
    */
  public void quicksort()
  {
      if(first != last)
      {
-        ContentType pivot = first.getContentObject();
+         ContentType pivot;
+        if(teilweiseSortiert)
+            pivot = last.getContentObject();
+        else
+            pivot = first.getContentObject();
+        
         SortableList<ContentType> hilfsliste = new SortableList();
         current = first;
         this.remove();
@@ -89,6 +99,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
             this.concat(hilfsliste);            
      }
      this.toFirst();
+     teilweiseSortiert = true;
  }
  
  /**
@@ -117,6 +128,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
      
      this.concat(hilfsliste);
      current = first;
+     teilweiseSortiert = true;
  }
  
  /**
@@ -156,6 +168,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
             this.next();
         }
       this.toFirst();
+      teilweiseSortiert = false;
   }
   
   /**
@@ -165,6 +178,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
   {
       while(!this.sortiert())
           this.mischen();
+      teilweiseSortiert = true;
   }
   
   /**
