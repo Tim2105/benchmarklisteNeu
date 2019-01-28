@@ -1,11 +1,9 @@
 package benchmark_list_model;
 
-import benchmark_list_model.List;
-import benchmark_list_model.ComparableContent;
 
 public class SortableList <ContentType extends ComparableContent> extends List<ContentType> {
 
-    private boolean teilweiseSortiert;
+    private boolean teilweiseSortiert, sortiert;
     
   public SortableList() {
     super();
@@ -34,6 +32,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
       }
       this.toFirst();
       teilweiseSortiert = true;
+      sortiert = true;
   }
   
   /**
@@ -61,6 +60,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
       this.concat(liste);
       this.toFirst();
       teilweiseSortiert = true;
+      sortiert = true;
   }
  
   /**
@@ -69,7 +69,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
    */
  public void quicksort()
  {
-     if(first != last)
+     if(first != last && !sortiert)
      {
          ContentType pivot;
         if(teilweiseSortiert)
@@ -100,6 +100,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
      }
      this.toFirst();
      teilweiseSortiert = true;
+     sortiert = true;
  }
  
  /**
@@ -129,6 +130,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
      this.concat(hilfsliste);
      current = first;
      teilweiseSortiert = true;
+     sortiert = true;
  }
  
  /**
@@ -179,6 +181,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
       while(!this.sortiert())
           this.mischen();
       teilweiseSortiert = true;
+      sortiert = true;
   }
   
   /**
@@ -199,6 +202,25 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
       }
       current = first;
       return true;
+  }
+  
+  @Override
+  public void append(ContentType pContent) {
+    if (pContent != null) { // Nichts tun, wenn es keine Inhalt gibt.
+
+      if (this.isEmpty()) { // Fall: An leere Liste anfuegen.
+        this.insert(pContent);
+      } else { // Fall: An nicht-leere Liste anfuegen.
+
+        // Neuen Knoten erstellen.
+        ListNode newNode = new ListNode(pContent); 
+
+        last.setNextNode(newNode);
+        last = newNode; // Letzten Knoten aktualisieren.
+      }
+
+    }
+    sortiert = false;
   }
   
 }

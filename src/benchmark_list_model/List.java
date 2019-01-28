@@ -36,7 +36,7 @@ public class List<ContentType> {
      * 
      * @param pContent das Inhaltsobjekt vom Typ ContentType
      */
-    private ListNode(ContentType pContent) {
+    ListNode(ContentType pContent) {
       contentObject = pContent;
       next = null;
     }
