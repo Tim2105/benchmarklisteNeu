@@ -171,6 +171,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
         }
       this.toFirst();
       teilweiseSortiert = false;
+      sortiert = false;
   }
   
   /**
