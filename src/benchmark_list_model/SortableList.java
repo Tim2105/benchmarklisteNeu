@@ -1,7 +1,8 @@
 package benchmark_list_model;
 
+import java.util.Iterator;
 
-public class SortableList <ContentType extends ComparableContent> extends List<ContentType> {
+public class SortableList <ContentType extends ComparableContent> extends List<ContentType> implements Iterator<ContentType> {
 
     private boolean teilweiseSortiert, sortiert;
     
@@ -55,7 +56,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
           }
           liste.append(min.getContentObject());
           current = min;
-          this.remove();
+          this.removeElement();
       }
       this.concat(liste);
       this.toFirst();
@@ -79,7 +80,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
         
         SortableList<ContentType> hilfsliste = new SortableList();
         current = first;
-        this.remove();
+        this.removeElement();
         while(this.hasAccess())
         {
             while(this.hasAccess())
@@ -87,10 +88,10 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
                 if(pivot.isLess(current.getContentObject()))
                 {
                     hilfsliste.append(current.getContentObject());
-                    this.remove();
+                    this.removeElement();
                 }
                 else
-                    this.next();
+                    this.nextElement();
             }
         }
             hilfsliste.quicksort();
@@ -120,11 +121,11 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
                  hilfsliste.insert(current.getContentObject());
                  break;
              }
-             hilfsliste.next();
+             hilfsliste.nextElement();
          }
          if(!hilfsliste.hasAccess())
              hilfsliste.append(current.getContentObject());
-         this.remove();
+         this.removeElement();
      }
      
      this.concat(hilfsliste);
@@ -167,7 +168,7 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
             else if(Math.round(Math.random() * 4) == 4)
                 this.swap(current, last);
 
-            this.next();
+            this.nextElement();
         }
       this.toFirst();
       teilweiseSortiert = false;
@@ -223,6 +224,21 @@ public class SortableList <ContentType extends ComparableContent> extends List<C
     }
     sortiert = false;
   }
+
+    @Override
+    public boolean hasNext() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ContentType next() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove() {
+        Iterator.super.remove(); //To change body of generated methods, choose Tools | Templates.
+    }
   
 }
 
